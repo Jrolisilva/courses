@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Faker::Config.locale = 'pt-BR'
+
+10.times do
+  Course.create(
+    title: Faker::Job.title,
+    description: Faker::Job.field
+  )
+end

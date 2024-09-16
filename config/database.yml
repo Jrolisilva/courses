@@ -2,8 +2,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  host: localhost
+  username: databaseuser
+  password: databaseuser
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -18,4 +19,5 @@ production:
   <<: *default
   database: twygo_courses_production
   username: twygo_courses
-  password: <%= ENV["TWYGO_COURSES_DATABASE_PASSWORD"] %>
+  password: twygo_courses
+  host: <%= ENV['DATABASE_URL'] %>

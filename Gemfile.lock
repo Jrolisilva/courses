@@ -69,6 +69,8 @@ GEM
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
+    byebug (11.1.3)
+    coderay (1.1.3)
     concurrent-ruby (1.3.4)
     crass (1.0.6)
     date (3.3.4)
@@ -76,6 +78,13 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     erubi (1.13.0)
+    factory_bot (6.5.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.6)
@@ -120,6 +129,14 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     pg (1.5.8)
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    pry-byebug (3.10.1)
+      byebug (~> 11.0)
+      pry (>= 0.13, < 0.15)
+    pry-rails (0.3.11)
+      pry (>= 0.13.0)
     psych (5.1.2)
       stringio
     puma (5.6.8)
@@ -181,8 +198,13 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  byebug
   debug
+  factory_bot_rails
+  faker
   pg (~> 1.1)
+  pry-byebug
+  pry-rails
   puma (~> 5.0)
   rails (~> 7.0.8, >= 7.0.8.4)
   tzinfo-data
