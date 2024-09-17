@@ -4,14 +4,13 @@ import {
   Flex,
   VStack,
   Text,
-  Divider,
   Icon,
   Switch,
   useColorMode,
   useTheme,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import { SettingsIcon, StarIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -47,45 +46,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     >
       <VStack align="start" spacing={6} flex="1">
         <Box w="100%">
-          <Flex align="center" mb={2}>
-            <Icon as={SettingsIcon} mr={2} color={colorMode === 'light' ? 'gray.600' : 'gray.400'} />
-            <Text fontSize="md" fontWeight="bold" color={colorMode === 'light' ? 'gray.600' : 'gray.400'}>
-              Admin
-            </Text>
-          </Flex>
-          <VStack align="start" spacing={3} ml={6}>
-            <Text
-              as={NavLink}
-              to="/management"
-              _hover={{ textDecoration: 'none' }}
-              _activeLink={{ color: theme.colors.primary[500], fontWeight: 'bold' }}
-              onClick={onClose}
-              fontSize="lg"
-            >
-              Gerenciar cursos
-            </Text>
-            <Text
-              as={NavLink}
-              to="/reports"
-              _hover={{ textDecoration: 'none' }}
-              _activeLink={{ color: theme.colors.primary[500], fontWeight: 'bold' }}
-              onClick={onClose}
-              fontSize="lg"
-            >
-              Relatório
-            </Text>
-          </VStack>
-        </Box>
-
-        <Divider borderColor={colorMode === 'light' ? 'gray.300' : 'gray.600'} my={4} />
-
-        <Box w="100%">
-          <Flex align="center" mb={2}>
-            <Icon as={StarIcon} mr={2} color={colorMode === 'light' ? 'gray.600' : 'gray.400'} />
-            <Text fontSize="md" fontWeight="bold" color={colorMode === 'light' ? 'gray.600' : 'gray.400'}>
-              Aluno
-            </Text>
-          </Flex>
           <VStack align="start" spacing={3} ml={6}>
             <Text
               as={NavLink}
