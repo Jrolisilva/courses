@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
+import { getCourses } from '../api/api';
+
+interface Course {
+  id: number;
+  title: string;
+  description: string;
+}
 
 const CourseList: React.FC = () => {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/courses')
-      .then((response) => {
-        setCourses(response.data);
+    getCourses()
+      .then((response) => { setCourses(response.data);
       })
       .catch((error) => {
         console.error('Erro ao carregar os cursos:', error);

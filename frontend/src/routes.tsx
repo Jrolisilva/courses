@@ -1,14 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CourseList from './components/courseList';
+import Home from './pages/Home';
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* Define a rota para a lista de cursos */}
-        <Route path="/" element={<CourseList />} />
-        {/* Define a rota para o formulário de cadastro/edição de curso */}
+        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );
