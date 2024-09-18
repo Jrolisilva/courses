@@ -10,6 +10,8 @@ Faker::Config.locale = 'pt-BR'
 10.times do
   Course.create(
     title: Faker::Job.title,
-    description: Faker::Job.field
+    description: Faker::Job.field,
+    start_date: Faker::Date.between(from: 2.days.ago, to: Date.today).strftime('%d/%m/%Y'),
+    end_date: Faker::Date.between(from: Date.today, to: 1.year.from_now).strftime('%d/%m/%Y')
   )
 end
