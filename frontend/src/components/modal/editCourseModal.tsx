@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalFooter, ModalBody, Button, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Textarea,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 interface EditCourseModalProps {
   show: boolean;
@@ -11,6 +25,8 @@ interface EditCourseModalProps {
 const EditCourseModal: React.FC<EditCourseModalProps> = ({ show, handleClose, course, handleSave }) => {
   const [name, setName] = useState(course.title);
   const [description, setDescription] = useState(course.description);
+  const textColor = useColorModeValue("text.light", "text.dark");
+  const modalBgColor = useColorModeValue('background.light.card', 'background.dark.default');
 
   const onSave = () => {
     handleSave({ ...course, name, description });
@@ -28,39 +44,43 @@ const EditCourseModal: React.FC<EditCourseModalProps> = ({ show, handleClose, co
 
   return (
     <Modal isOpen={show} onClose={handleClose}>
-      <ModalHeader>Editar </ModalHeader>
-      <ModalBody>
-        <FormControl id="formCourseName">
-          <FormLabel htmlFor="courseName">Titulo do Curso</FormLabel>
-          <Input
-            id="courseName"
-            name="courseName"
-            type="text"
-            autoComplete="off"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </FormControl>
-        <FormControl id="formCourseDescription">
-          <FormLabel htmlFor="courseDescription">Descrição</FormLabel>
-          <Textarea
-            id="courseDescription"
-            name="courseDescription"
-            autoComplete="off"
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </FormControl>
-      </ModalBody>
-      <ModalFooter>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={onSave}>
-          Save Changes
-        </Button>
-      </ModalFooter>
+      <ModalOverlay />
+      <ModalContent bg={modalBgColor}>
+        <ModalHeader fontSize="2xl" fontWeight="bold" textAlign="center" color={textColor}>Editar </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <FormControl id="formCourseName">
+            <FormLabel htmlFor="courseName">Titulo do Curso</FormLabel>
+            <Input
+              id="courseName"
+              name="courseName"
+              type="text"
+              autoComplete="off"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="formCourseDescription">
+            <FormLabel htmlFor="courseDescription">Descrição</FormLabel>
+            <Textarea
+              id="courseDescription"
+              name="courseDescription"
+              autoComplete="off"
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </FormControl>
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="red" bg="red.700" mr={3} onClick={handleClose}>
+            Fechar
+          </Button>
+          <Button colorScheme="purple" bg="purple.700" onClick={onSave}>
+            Salvar
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 };
