@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, VStack, Stack, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Box, Text, VStack, Stack, Heading, useColorModeValue, Button } from '@chakra-ui/react';
 import Layout from '../components/layout/Layout';
 import { getCourses } from '../api/api';
 import EditCourseModal from '../components/modal/editCourseModal';
+import DeleteCourseModal from '../components/modal/deleteCourseModal';
 
 interface Course {
   id: number;
@@ -30,6 +31,7 @@ const Home: React.FC = () => {
   const borderColor = useColorModeValue('border.light', 'border.dark');
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [couseToDelete, setCouseToDelete] = useState<Course | null>(null);
 
   const handleEditCourse = (course: Course) => {
     setSelectedCourse(course);
@@ -46,6 +48,10 @@ const Home: React.FC = () => {
     const endDateB = new Date(b.end_date).getTime();
     return endDateA - endDateB;
   });
+
+  const handleDeleteCourse = (course: Course) => {
+    setCouseToDelete(course);
+  }
 
   return (
     <Layout>
@@ -66,10 +72,13 @@ const Home: React.FC = () => {
                 <Text fontSize={{ base: 'sm', md: 'md' }} color={textColor}>
                   Término em: {formatDate(course.end_date)}
                 </Text>
-              <Text fontSize={{ base: 'sm', md: 'md' }} color={textColor} cursor="pointer" onClick={() => handleEditCourse(course)}>
-                Editar
-              </Text>
-            </Box>
+                <Button mt={3} mr={3} onClick={() => handleEditCourse(course)}>
+                  Editar
+                </Button>
+                <Button colorScheme="red" bg="red.700" mt={3} mr={3} onClick={() => handleDeleteCourse(course)}>
+                  Excluir
+                </Button>
+              </Box>
             ))}
           </Stack>
         </VStack>
@@ -84,6 +93,12 @@ const Home: React.FC = () => {
           }}
         />
       )}
+      <DeleteCourseModal
+        isOpen={Boolean(couseToDelete)}
+        onClose={() => setCouseToDelete(null)}
+        onConfirm={() => setCouseToDelete(null)}
+        courseTitle={couseToDelete ? couseToDelete.id.toString() : ''}
+      />
     </Layout>
   );
 };

@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
       .on_success { |course| render json: course, status: :ok }
   end
 
-  def delete
+  def destroy
     ::Course.find(params[:id]).destroy
 
     render json: { message: 'Course deleted' }, status: :ok

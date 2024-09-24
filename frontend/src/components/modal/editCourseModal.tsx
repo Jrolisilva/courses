@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { updateCourse } from "../../api/api";
 import {
   Button,
   FormControl,
@@ -28,15 +29,21 @@ const EditCourseModal: React.FC<EditCourseModalProps> = ({ show, handleClose, co
   const textColor = useColorModeValue("text.light", "text.dark");
   const modalBgColor = useColorModeValue('background.light.card', 'background.dark.default');
 
-  const onSave = () => {
-    handleSave({ ...course, name, description });
-    handleClose();
-  };
-
   useEffect(() => {
     setName(course.title);
     setDescription(course.description);
   }, [course]);
+
+  const onSave = () => {
+    updateCourse(course.id.toString(), { title: name, description })
+      .then(() => {
+        handleSave({ ...course, name, description });
+        handleClose();
+      })
+      .catch(error => {
+        console.error("Failed to update course:", error);
+      });
+  };
 
   if (!course) {
     return null;

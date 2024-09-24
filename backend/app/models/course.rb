@@ -2,7 +2,6 @@ class Course < ApplicationRecord
   self.table_name = 'courses'
 
   validates :title, :description, :start_date, :end_date,  presence: true
-  before_save :format_dates
 
   def call
     self.save
