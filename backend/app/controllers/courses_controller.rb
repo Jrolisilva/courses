@@ -1,7 +1,10 @@
 
 class CoursesController < ApplicationController
   def index
-    render json: ::Course.all
+    youtube_service = YoutubeService.new
+    @videos = youtube_service.search_videos
+
+    render json: @videos, status: :ok
   end
 
   def create
