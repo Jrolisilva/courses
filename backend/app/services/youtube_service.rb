@@ -3,7 +3,7 @@ class YoutubeService
   BASE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
   def initialize
-    @api_key = ENV['YOUTUBE_API_KEY'].freeze
+    @api_key = "AIzaSyCtz5wyjLR35lHlK7dJLlnQX6ytV-ge5V8".freeze
   end
 
   def search_videos

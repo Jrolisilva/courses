@@ -1,10 +1,9 @@
 
 class CoursesController < ApplicationController
-  def index
-    youtube_service = YoutubeService.new
-    @videos = youtube_service.search_videos
 
-    render json: @videos, status: :ok
+  def index
+    @courses = ::Course.all
+    render json: @courses, status: :ok
   end
 
   def create
