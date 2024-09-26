@@ -14,7 +14,7 @@ class Course < ApplicationRecord
   end
 
   def on_success
-   return yield(self) if persisted?
+    return yield(self) if persisted?
 
     on_failure
   end

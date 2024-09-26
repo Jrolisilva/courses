@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createCourse } from '../../api/api';
 import {
   Modal,
   ModalOverlay,
@@ -17,12 +18,12 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
 
 interface ICourse {
   title: string;
   description: string;
-  endDate: Date;
+  start_date: string;
+  end_date: string;
 }
 
 interface AddCourseModalProps {
@@ -34,7 +35,8 @@ interface AddCourseModalProps {
 const AddCourseModal: React.FC<AddCourseModalProps> = ({ isOpen, onClose, onSave }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [end_date, setEndDate] = useState('');
+  const [start_date, setStartDate] = useState(new Date().toISOString());
   const [error, setError] = useState('');
 
   const modalSize = useBreakpointValue({ base: 'full', md: 'md' });
@@ -46,20 +48,29 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({ isOpen, onClose, onSave
   const inputBorderColor = useColorModeValue('border.light', 'border.dark');
   const errorTextColor = useColorModeValue('accent.800', 'accent.800');
 
+  useEffect(() => {
+    if (!isOpen) {
+      setTitle('');
+      setDescription('');
+      setStartDate(new Date().toISOString());
+      setEndDate('');
+      setError('');
+    }
+  }, [isOpen]);
 
   const handleSubmit = () => {
-    if (!title || !description || !endDate) {
-      setError('Todos os campos são obrigatórios e pelo menos um vídeo deve ser adicionado');
+    if (!title || !description || !end_date) {
+      setError('Todos os campos são obrigatórios');
       return;
     }
+    createCourse({ title, description, end_date: new Date(end_date), start_date: new Date(start_date) })
+      .then((response) => {
+        onSave(response.data);
+      })
+      .catch((error) => {
+        console.error('Erro ao criar o curso:', error);
+      });
 
-    const newCourse: Omit<ICourse, '_id'> = {
-      title,
-      description,
-      endDate: new Date(endDate)
-    };
-
-    onSave(newCourse);
     handleClose();
   };
 
@@ -103,11 +114,11 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({ isOpen, onClose, onSave
               color={textColor}
             />
           </FormControl>
-          <FormControl id="endDate" mb={4} isRequired>
+          <FormControl id="end_date" mb={4} isRequired>
             <FormLabel fontWeight="bold" color={textColor}>Data de Término</FormLabel>
             <Input
               type="date"
-              value={endDate}
+              value={end_date}
               onChange={(e) => setEndDate(e.target.value)}
               placeholder="Data de término"
               bg={inputBgColor}
@@ -115,19 +126,6 @@ const AddCourseModal: React.FC<AddCourseModalProps> = ({ isOpen, onClose, onSave
               color={textColor}
             />
           </FormControl>
-
-          <Divider my={4} />
-          <Text fontWeight="bold" mb={2} color={textColor}>Adicionar Vídeos</Text>
-          <Button
-            leftIcon={<AddIcon />}
-            onClick={handleSubmit}
-            colorScheme="teal"
-            mb={4}
-            width="100%"
-          >
-            Adicionar Vídeo
-          </Button>
-
           {error && (
             <Text color={errorTextColor} mb={4}>
               {error}

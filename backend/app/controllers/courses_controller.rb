@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   end
 
   def create
-    ::Course.call(course_params)
+    ::Course.new(course_params).call
       .on_success { |course| render json: course, status: :created }
   end
 
@@ -26,6 +26,6 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:title, :description)
+    params.require(:course).permit(:title, :description, :start_date, :end_date)
   end
 end
